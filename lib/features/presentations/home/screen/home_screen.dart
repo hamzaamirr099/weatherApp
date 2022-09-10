@@ -59,19 +59,6 @@ class HomeScreen extends StatelessWidget {
             return Scaffold(
               key: drawerKey,
               drawer: SideBarSettings(),
-              floatingActionButton: FloatingActionButton(
-                  onPressed: () async {
-                    Position position =
-                        await GeolocatorService().determinePosition();
-                    // LocationPermission permission;
-                    // permission = await Geolocator.requestPermission();
-                    // Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-                    if (position != null) {
-                      print(position.longitude);
-                      print(position.latitude);
-                    }
-                  },
-                  backgroundColor: Colors.amber),
               appBar: AppBar(
                 // backgroundColor: Colors.red,
                 toolbarHeight: 300,
