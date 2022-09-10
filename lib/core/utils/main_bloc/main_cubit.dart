@@ -56,7 +56,6 @@ class MainCubit extends Cubit<MainStates> {
   }
   Future<void> getWeatherDataByLocation({required double longitude, required double latitude}) async {
     try {
-      emit(LoadingState());
       Response value =
       await DioHelper.getData(url: '/v1/forecast.json', query: {
         'q': "$latitude,$longitude",

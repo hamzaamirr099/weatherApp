@@ -18,18 +18,3 @@ class Day
 
   }
 }
-
-/*
-"day": {
-        "maxtemp_c": 24.0,
-        "mintemp_c": 17.4,
-        "daily_will_it_rain": 0,
-        "daily_chance_of_rain": 0,
-        "condition": {
-            "text": "Partly cloudy",
-            "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
-            "code": 1003
-        },
-        "uv": 6.0
-    },
- */

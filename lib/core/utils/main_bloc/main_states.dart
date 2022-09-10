@@ -14,8 +14,3 @@ class ChangeFavoriteState extends MainStates {}
 
 class LoadingLonAndLatState extends MainStates {}
 
-// class RecentSearchChangedState extends MainStates {}
-//
-// class ManagedLocationState extends MainStates {}
-//
-// class RecentSearchItemRemoved extends MainStates {}

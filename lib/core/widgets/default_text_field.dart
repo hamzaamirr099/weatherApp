@@ -24,7 +24,7 @@ class DefaultFormField extends StatelessWidget {
         controller: controller,
         onFieldSubmitted: onFieldSubmitted,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(15),
+          contentPadding: const EdgeInsets.all(15),
           hintText: hintText,
           suffixIcon: const Icon(Icons.search, color: Colors.white,),
           border: const OutlineInputBorder(

@@ -12,7 +12,6 @@ class ChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<WeatherAtThisHour> listToShow = [];
-    // Map<String, int> mapToShow = {};
     for (var item in weatherStatusPerHour) {
       List<String> localDate = item.time!.split(" ");
       String time = localDate[1];

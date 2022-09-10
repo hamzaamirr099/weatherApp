@@ -7,8 +7,6 @@ class MainWeatherModel {
   Location? location;
   WeatherStatus? current;
 
-  // Forecast? forecast;
-
   List<ForecastDayData> forecastday = [];
 
   MainWeatherModel.fromJson(Map<String, dynamic> map) {

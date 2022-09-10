@@ -2,19 +2,16 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app_algoriza/core/shared/functions.dart';
 import 'package:weather_app_algoriza/core/utils/main_bloc/main_cubit.dart';
 import 'package:weather_app_algoriza/core/utils/main_bloc/main_states.dart';
 import 'package:weather_app_algoriza/core/utils/settings_bloc/settings_cubit.dart';
-import 'package:weather_app_algoriza/core/widgets/default_text_field.dart';
+import 'package:weather_app_algoriza/features/presentations/home/screen/welcome_screen.dart';
 import 'package:weather_app_algoriza/features/presentations/home/widgets/chart_widget.dart';
 import 'package:weather_app_algoriza/features/presentations/home/widgets/next_six_days_widget.dart';
 import 'package:weather_app_algoriza/features/presentations/home/widgets/side_bar_settings.dart';
 import 'package:weather_app_algoriza/features/presentations/home/widgets/sunrise_and_sunset.dart';
 import 'package:weather_app_algoriza/features/presentations/home/widgets/uv_wind_humidity.dart';
-import '../../../../core/utils/network/remote/geolocator_service.dart';
 import '../widgets/container_item.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -50,9 +47,6 @@ class HomeScreen extends StatelessWidget {
             String currentDay =
                 DateFormat('EEE').format(DateTime.parse(localDate[0]));
             String currentTime = localDate[1];
-            // DateFormat("h:mma").format(date);
-            // final time = TimeOfDay(hour: currentTime.trim(), minute: 12);
-            // print(time.format(context));
 
             String weatherStatusImage = detectWeatherStatus(context);
 
@@ -108,6 +102,10 @@ class HomeScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
+                    if (state is LoadingLonAndLatState || state is LoadingState)
+                    const LinearProgressIndicator(
+                      color: Colors.amberAccent,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Row(
@@ -140,14 +138,6 @@ class HomeScreen extends StatelessWidget {
                               height: 150,
                             ),
                           ),
-                          // const Padding(
-                          //   padding: EdgeInsets.only(top: 20.0),
-                          //   child: Icon(
-                          //     Icons.sunny,
-                          //     color: Colors.yellow,
-                          //     size: 120,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -188,13 +178,6 @@ class HomeScreen extends StatelessWidget {
                             "$currentDay $currentTime",
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          if (state is LoadingState)
-                            const Padding(
-                              padding: EdgeInsets.only(top: 5.0),
-                              child: LinearProgressIndicator(
-                                color: Colors.amberAccent,
-                              ),
-                            ),
                         ],
                       ),
                     ),
@@ -259,88 +242,7 @@ class HomeScreen extends StatelessWidget {
               ),
             );
           },
-          fallback: (context) => Scaffold(
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(50.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Welcome to Weather App",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    DefaultFormField(
-                      hintText: "Enter a location...",
-                      controller: mainCubit.countryNameController,
-                      onFieldSubmitted: (value) {
-                        if (value!.isNotEmpty) {
-                          mainCubit.getWeatherData(
-                              countryName:
-                                  mainCubit.countryNameController.text);
-                        } else {
-                          showToastMessage(message: "Enter a location");
-                        }
-                      },
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Container(
-                            height: 1,
-                            color: Colors.grey[200],
-                          )),
-                          Text(
-                            "  Or  ",
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          Expanded(
-                              child: Container(
-                            height: 1,
-                            color: Colors.grey[200],
-                          )),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: const Color(0xff171717),
-                      ),
-                      child: MaterialButton(
-                        onPressed: () {
-                          mainCubit.getLonAndLat();
-
-                        },
-                        child: Text(
-                          "Get current location",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    if (state is LoadingState)
-                      const LinearProgressIndicator(
-                        color: Colors.amberAccent,
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          fallback: (context) => WelcomeScreen(currentState: state),
         );
       },
     );

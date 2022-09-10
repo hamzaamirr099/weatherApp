@@ -20,10 +20,3 @@ class WeatherStatus
 
   }
 }
-/*
-"temp_c": 19.0,
-"wind_kph": 15.1,
-"humidity": 64,
-"feelslike_c": 19.0,
-"uv": 1.0,
- */
